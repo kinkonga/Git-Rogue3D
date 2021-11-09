@@ -265,8 +265,8 @@ Camera:
   m_GameObject: {fileID: 1256484825}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: {x: 10, y: 10}
   tuile: {fileID: 5876349626042834978, guid: 574e571507eb6f64ba914f9acda64021, type: 3}
+  player: {fileID: 7165285232508309871, guid: e01802f2b5d3f9040aec6ad9debd1f13, type: 3}
 --- !u!1 &2091915450
 GameObject:
   m_ObjectHideFlags: 0
