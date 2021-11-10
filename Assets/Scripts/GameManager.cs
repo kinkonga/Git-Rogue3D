@@ -32,53 +32,68 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         //INPUT
-        inputActions.Basic.Move.performed += PlayerMove;
+        inputActions.Basic.Move.performed += moveFront;
         inputActions.Basic.Move.Enable();
+        inputActions.Basic.Rotate.performed += PlayerRotate;
+        inputActions.Basic.Rotate.Enable();
     }
     private void OnDisable()
     {
         inputActions.Basic.Move.Disable();
+        inputActions.Basic.Rotate.Disable();
 
     }
 
     private void PlayerMove(InputAction.CallbackContext obj)
     {
-        if (player.getTargetWorldPosition() == player.transform.position)
+        if (player.TargetWorldPosition == player.transform.position)
         {
             Debug.Log("LOG");
             Vector2 pMove = inputActions.Basic.Move.ReadValue<Vector2>();
             MoveOrder(player, pMove);
 
-            /*
-            Vector2 nMove = RandomOrtho();
-            MoveOrder(npc, nMove);
-            ShowText("hello", 25, Color.red, player.transform.position + new Vector3(0, .5f, 0), Vector3.up * 50, .3f);
-            */
-           
         }
     }
+
+
+    private void PlayerRotate(InputAction.CallbackContext obj)
+    {
+        float pRotate = inputActions.Basic.Rotate.ReadValue<float>();
+        pRotate *= 90;
+        Debug.Log("input : " +pRotate);
+        Quaternion q = Quaternion.Euler(0, pRotate, 0);
+        player.TargetRotation = q * player.transform.rotation;
+        Debug.Log("player target " + player.TargetRotation);
+        player.RotateDelta = new Vector3(0, pRotate, 0);
+    }
+
+    private void moveFront(InputAction.CallbackContext obj)
+    {
+        Debug.Log(inputActions.Basic.Move.ReadValue<Vector2>());
+    }
+
     private void MoveOrder(Entity e, Vector2 move)
     {
-        e.setTargetBoardPosition(new Vector2(Mathf.Round(move.x), Mathf.Round(move.y)) + e.getBoardPosition());
+        e.TargetBoardPosition = new Vector2(Mathf.Round(move.x), Mathf.Round(move.y)) + e.BoardPosition;
 
-        Debug.Log(e + " to " + e.getBoardPosition() + " -> " + e.getTargetBoardPosition());
+        Debug.Log(e + " to " + e.BoardPosition + " -> " + e.TargetBoardPosition);
 
         if (IsPassable(e))
         {
-            e.setMoveDelta(new Vector3(Mathf.Round(move.x), 0, Mathf.Round(move.y)));
-            e.setTargetWorldPosition(new Vector3(Mathf.Round(move.x), 0, Mathf.Round(move.y)) + e.transform.position);
-            e.setBoardPosition(e.getTargetBoardPosition());
+            e.MoveDelta = new Vector3(Mathf.Round(move.x), 0, Mathf.Round(move.y));
+            e.TargetWorldPosition = new Vector3(Mathf.Round(move.x), 0, Mathf.Round(move.y)) + e.transform.position;
+            e.BoardPosition = e.TargetBoardPosition;
         }
         
     }
     private bool IsPassable(Entity e)
     {
-        if (isFloorPassable(e.getTargetBoardPosition()))
+        if (isFloorPassable(e.TargetBoardPosition))
         {
 
             foreach (Entity ye in entitiesList)
             {
-                if (ye.getBoardPosition() == e.getTargetBoardPosition())
+                if (ye.BoardPosition == e.TargetBoardPosition)
                 {
                     return false;
                 }

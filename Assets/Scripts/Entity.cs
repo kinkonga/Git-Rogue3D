@@ -7,8 +7,10 @@ public class Entity : MonoBehaviour
     private Vector2 boardPosition;
     private Vector2 targetBoardPosition;
     private Vector3 targetWorldPosition;
+    private Quaternion targetRotation;
 
     private Vector3 moveDelta;
+    private Vector3 rotateDelta;
     private float speed = 5;
     private bool isPassable = false;
 
@@ -19,17 +21,25 @@ public class Entity : MonoBehaviour
         {
             
             transform.Translate(moveDelta * speed * Time.deltaTime);
+            
         }
+
+        if (targetRotation != transform.rotation)
+        {
+            transform.Rotate(rotateDelta * Time.deltaTime);
+        }
+
        
     }
 
     //Getter and Setter
     public void setAllPosition(Vector3 p)
     {
-        transform.position = new Vector3(p.x,0.3f,p.y) ;
-        targetWorldPosition = new Vector3(p.x, 0.3f, p.y);
+        transform.position = new Vector3(p.x, 0.48f, p.y) ;
+        targetWorldPosition = new Vector3(p.x, 0.48f, p.y);
         boardPosition = new Vector2(p.x,p.y);
         targetBoardPosition = new Vector2(p.x, p.y);
+        targetRotation = transform.rotation;
     }
     public bool IsPassable()
     {
@@ -39,6 +49,7 @@ public class Entity : MonoBehaviour
         }
         return false;
     }
+    /*
     public Vector2 getBoardPosition()
     {
         return boardPosition;
@@ -71,12 +82,29 @@ public class Entity : MonoBehaviour
     {
         moveDelta = v;
     }
-    public void setSpeed(float f)
+    */
+    public float Speed { get => speed; set => speed = value; }
+    public Vector2 BoardPosition { get => boardPosition; set => boardPosition = value; }
+    public Vector2 TargetBoardPosition { get => targetBoardPosition; set => targetBoardPosition = value; }
+    public Vector3 TargetWorldPosition { get => targetWorldPosition; set => targetWorldPosition = value; }
+    public Quaternion TargetRotation { get => targetRotation; set => targetRotation = value; }
+    public Vector3 MoveDelta { get => moveDelta; set => moveDelta = value; }
+    public Vector3 RotateDelta { get => rotateDelta; set => rotateDelta = value; }
+    /*
+    public void setTargetRotation(Quaternion rotation)
     {
-        speed = f;
+        targetRotation = rotation;
     }
-    public float getSpeed()
+    public Quaternion getTargetRotation()
     {
-        return speed;
+        return targetRotation;
     }
+    public void setRotationDelta(Vector3 eulers)
+    {
+        rotateDelta = eulers;
+    }
+    public Vector3 getRotationDelta()
+    {
+        return rotateDelta;
+    }*/
 }

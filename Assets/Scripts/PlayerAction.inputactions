@@ -15,9 +15,9 @@
                 },
                 {
                     "name": "Rotate",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "df79cc6e-9d6e-420f-9819-2a79830187f6",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -174,7 +174,7 @@
                 {
                     "name": "1D Axis",
                     "id": "b66ebdaa-8444-4789-be94-34008d55e1a7",
-                    "path": "1DAxis",
+                    "path": "1DAxis(minValue=-90,maxValue=90)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
